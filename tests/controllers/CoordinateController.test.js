@@ -1,8 +1,5 @@
 /*var supertest = require('supertest');
 var server = supertest.agent('http://localhost:1337')
-
-
-
 describe("PATCH /send-plays-player ", function (){
     it ("Return plays player ", function (done){
         server
@@ -17,7 +14,6 @@ describe("PATCH /send-plays-player ", function (){
           });
     });
 });
-
 describe("PATCH /send-plays-player ", function (){
     it ("Return plays player ", function (done){
         server
@@ -32,7 +28,6 @@ describe("PATCH /send-plays-player ", function (){
           });
     });
 });
-
 describe("PATCH /send-plays-player ", function (){
     it ("Return plays player ", function (done){
         server

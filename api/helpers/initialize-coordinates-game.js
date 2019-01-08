@@ -1,38 +1,38 @@
 module.exports = {
 
 
-  friendlyName: 'Initialize coordinates game',
+    friendlyName: 'Initialize coordinates game',
 
 
-  description: '',
+    description: '',
 
 
-  inputs: {
+    inputs: {
 
-  },
-
-
-  exits: {
-
-    success: {
-      description: 'All done.',
     },
 
-  },
+
+    exits: {
+
+        success: {
+            description: 'All done.',
+        },
+
+    },
 
 
-  fn: async function(inputs) {
-    var matriz = [];
-    var arrX = await sails.helpers.arrayX();
-    var arrY = await sails.helpers.arrayY();
-    for (var i = 0; i < arrX.length; i++) {
-      matriz[arrX[i]] = [];
-      for (var j = 0; j < arrY.length; j++) {
-        matriz[arrX[i]][arrY[j]] = "Free"; // libre
-      }
-    }
-    return matriz;
-  }
+    async fn() {
+        const matriz = [];
+        const arrX = await sails.helpers.arrayX();
+        const arrY = await sails.helpers.arrayY();
+        for (let i = 0; i < arrX.length; i += 1) {
+            matriz[arrX[i]] = [];
+            for (let j = 0; j < arrY.length; j += 1) {
+                matriz[arrX[i]][arrY[j]] = 'Free'; // libre
+            }
+        }
+        return matriz;
+    },
 
 
 };

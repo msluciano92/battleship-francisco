@@ -5,7 +5,6 @@ describe("POST /create-game ", function (){
 });
 /*var supertest = require('supertest');
 var server = supertest.agent('http://localhost:1337')
-
   describe("POST /create-ship-player ", function (){
       it ("Return a new ship", function (done){
           server
@@ -19,7 +18,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return a new ship", function (done){
           server
@@ -33,7 +31,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -47,8 +44,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -62,7 +57,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -76,7 +70,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -90,7 +83,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -104,7 +96,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -118,7 +109,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
   describe("POST /create-ship-player ", function (){
       it ("Return error when ship create", function (done){
           server
@@ -132,8 +122,6 @@ var server = supertest.agent('http://localhost:1337')
             });
       });
   });
-
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return a new ship", function (done){
             server
@@ -147,7 +135,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return a new ship", function (done){
             server
@@ -161,7 +148,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server
@@ -175,8 +161,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server
@@ -190,7 +174,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server
@@ -204,7 +187,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server
@@ -218,7 +200,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server
@@ -232,7 +213,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server
@@ -246,7 +226,6 @@ var server = supertest.agent('http://localhost:1337')
               });
         });
     });
-
     describe("POST /create-ship-cpu ", function (){
         it ("Return error when ship create", function (done){
             server

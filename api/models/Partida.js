@@ -6,17 +6,17 @@
  */
 
 module.exports = {
-  attributes: {
-    nombre: {
-      type: 'string',
-      required: true,
+    attributes: {
+        nombre: {
+            type: 'string',
+            required: true,
+        },
+        ganador: {
+            type: 'string',
+        },
+        estado: {
+            type: 'string',
+            defaultsTo: 'Creando',
+        },
     },
-    ganador: {
-      type: 'string',
-    },
-    estado: {
-      type: 'string',
-      defaultsTo: 'Creando',
-    },
-  },
 };

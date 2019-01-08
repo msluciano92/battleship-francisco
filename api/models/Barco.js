@@ -6,31 +6,31 @@
  */
 
 module.exports = {
-  attributes: {
-    tablero_id: {
-      type: 'number',
+    attributes: {
+        tablero_id: {
+            type: 'number',
+        },
+        nombre: {
+            type: 'string',
+        },
+        longitud: {
+            type: 'number',
+        },
+        inicial_x: {
+            type: 'string',
+        },
+        inicial_y: {
+            type: 'string',
+        },
+        orientacion: {
+            type: 'string',
+        }, // V: vertical, H: horizontal
+        direccion: {
+            type: 'string',
+        }, // L: left, R: rigth, T: top, B: bottom
+        estado: {
+            type: 'string',
+            defaultsTo: 'Flota',
+        },
     },
-    nombre: {
-      type: 'string',
-    },
-    longitud: {
-      type: 'number',
-    },
-    inicial_x: {
-      type: 'string',
-    },
-    inicial_y: {
-      type: 'string',
-    },
-    orientacion: {
-      type: 'string',
-    }, // V: vertical, H: horizontal
-    direccion: {
-      type: 'string',
-    }, // L: left, R: rigth, T: top, B: bottom
-    estado: {
-      type: 'string',
-      defaultsTo: 'Flota',
-    },
-  },
 };

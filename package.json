@@ -30,7 +30,7 @@
     "test": "jest --maxWorkers=1",
     "test:watch": "npm run test -- --watch",
     "test:coverage": "npm run test -- --coverage",
-    "lint": "eslint api/**/*.js tests/**/*.js",
+    "lint": "eslint api/**/*.js api/**/**/*.js tests/**/*.js --fix",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo"
   },
   "main": "app.js",

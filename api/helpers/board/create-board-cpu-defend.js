@@ -1,36 +1,34 @@
 module.exports = {
-  friendlyName: 'Create board cpu defend',
-  description: '',
-  inputs: {
-    partida_id: {
-      friendlyName: 'Id game',
-      description: '',
-      type: 'number',
-      default: 0,
+    friendlyName: 'Create board cpu defend',
+    description: '',
+    inputs: {
+        partida_id: {
+            friendlyName: 'Id game',
+            description: '',
+            type: 'number',
+            default: 0,
+        },
     },
-  },
-  exits: {
+    exits: {
 
-    success: {
-      description: 'All done.',
+        success: {
+            description: 'All done.',
+        },
     },
-  },
-  
-  fn: async function (inputs) {
-    var gameId = inputs.partida_id;
-    if (gameId !== undefined) {
-      var board = await Tablero.create({
-        partida_id: gameId,
-        tipo: 'CD',
-      }).fetch();
-      if (board.id !== undefined) {
-        return true;
-      } else {
+
+    async fn(inputs) {
+        const gameId = inputs.partida_id;
+        if (gameId !== undefined) {
+            const board = await Tablero.create({
+                partida_id: gameId,
+                tipo: 'CD',
+            }).fetch();
+            if (board.id !== undefined) {
+                return true;
+            }
+            return false;
+        }
         return false;
-      }
-    } else {
-      return false;
-    }
-  },
+    },
 
 };
