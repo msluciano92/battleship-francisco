@@ -35,9 +35,9 @@ module.exports = {
         const gameId = inputs.partida_id;
         const board = await Tablero.findOne({
             partida_id: gameId,
-            tipO,
+            tipo: tipO,
         });
-        if (board.id !== undefined) {
+        if (board !== undefined) {
             const coordinates = await Coordenada.find({
                 tablero_id: board.id,
             });

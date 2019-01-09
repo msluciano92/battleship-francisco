@@ -12,12 +12,10 @@ module.exports = {
                 address: req.body.direccion,
                 name: req.body.nombre,
             };
-            const arrResp = await sails.helpers.ship.createShip.with(inputs);
-            const status = arrResp[0];
-            const msj = arrResp[1];
-            res.status(status).json(msj);
+            const result = await sails.helpers.ship.createShip.with(inputs);
+            return res.status(result.status).json(result);
         } catch (e) {
-            res.status(500).json(e);
+            return res.status(500).json(e);
         }
     },
 
@@ -33,12 +31,10 @@ module.exports = {
                 address: req.body.direccion,
                 name: req.body.nombre,
             };
-            const arrResp = await sails.helpers.ship.createShip.with(inputs);
-            const status = arrResp[0];
-            const msj = arrResp[1];
-            res.status(status).json(msj);
+            const result = await sails.helpers.ship.createShip.with(inputs);
+            return res.status(result.status).json(result);
         } catch (e) {
-            res.status(500).json(e);
+            return res.status(500).json(e);
         }
     },
 };

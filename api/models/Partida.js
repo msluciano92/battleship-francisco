@@ -10,6 +10,7 @@ module.exports = {
         nombre: {
             type: 'string',
             required: true,
+            unique: true,
         },
         ganador: {
             type: 'string',

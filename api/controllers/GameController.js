@@ -20,41 +20,41 @@ module.exports = {
                 if (!(respCA && respCD && respJA && respJD)) {
                     msj = ' Some boards not can created. ';
                 }
-
-                res.status(201).json(
+                return res.status(201).json(
                     `¡Game created, ${msj}. Create a ships ...{id=${game.id}}`,
                 );
-            } else {
-                res.status(400).json('Game could not be created.');
             }
+            return res.status(400).json('Game could not be created.');
         } catch (e) {
-            res.status(500).json(e);
+            return res.status(500).json(e);
         }
     },
 
     async getPlayerState(req, res) {
         try {
-            res.json(
-                await sails.helpers.game.getState.with(
-                    {
-                        tipo: 'JA',
-                        partida_id: req.params.id,
-                    },
-                ),
+            const result = await sails.helpers.game.getState.with(
+                {
+                    tipo: 'JA',
+                    partida_id: req.params.id,
+                },
             );
+            return res.status(result.status).json(result);
         } catch (e) {
-            res.status(500).json(e);
+            return res.status(500).json(e);
         }
     },
 
     async getCpuState(req, res) {
         try {
-            res.json(await sails.helpers.game.getState.with({
-                tipo: 'CA',
-                partida_id: req.params.id,
-            }));
+            const result = await sails.helpers.game.getState.with(
+                {
+                    tipo: 'CA',
+                    partida_id: req.params.id,
+                },
+            );
+            return res.status(result.status).json(result);
         } catch (e) {
-            res.status(500).json(e);
+            return res.status(500).json(e);
         }
     },
 };

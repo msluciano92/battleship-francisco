@@ -39,7 +39,7 @@ module.exports = {
                         tablero_id: board.id,
                     });
                     if (coordinates === undefined) {
-                        return 'Error coordinates';
+                        return { status: 200, msj: 'Error coordinates' };
                     }
                     const arrayXY = await sails.helpers.initializeCoordinatesGame();
                     coordinates.forEach((coordinate) => {
@@ -61,13 +61,13 @@ module.exports = {
                         });
                         x += 1;
                     });
-                    return arrayJson;
+                    return { status: 200, msj: arrayJson };
                 }
-                return tableros;
+                return { status: 200, msj: 'Game not includes boards' };
             }
-            return 'Game not exists or finalized.';
+            return { status: 200, msj: 'Game not exists or finalized' };
         }
-        return 'Indicate game.';
+        return { status: 200, msj: 'Indicate game' };
     },
 
 };

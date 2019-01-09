@@ -67,52 +67,40 @@ module.exports = {
         const addresS = inputs.address;
         const namE = inputs.name;
         const tipE = inputs.tipe;
-        const arrResp = [];
         if (gameId !== undefined) {
             const board = await Tablero.findOne({
                 partida_id: gameId,
                 tipo: tipE,
             });
-            if (board.id !== undefined) {
+            if (board !== undefined) {
                 if (namE !== undefined && xX !== undefined && yY !== undefined
           && longitud !== undefined && orientatioN !== undefined && addresS !== undefined) {
                     const ships = await Barco.find({ tablero_id: board.id });
-                    if (await sails.helpers.checkCoordinateShip.with({
-                        ships, x, y, longitud, orientation, address,
-                    }) === false) {
+                    const inputsParam = {
+                        ships, x: xX, y: yY, longitud, orientation: orientatioN, address: addresS,
+                    };
+                    if (await sails.helpers.checkCoordinateShip.with(inputsParam) === false) {
                         const ship = await Barco.create({
                             nombre: namE,
-                            inicial_x: x,
-                            inicial_y: y,
+                            inicial_x: xX,
+                            inicial_y: yY,
                             longitud,
-                            orientacion: orientation,
-                            direccion: address,
+                            orientacion: orientatioN,
+                            direccion: addresS,
                             tablero_id: board.id,
                         }).fetch();
-                        if (ship.id !== undefined) {
-                            arrResp[0] = 200;
-                            arrResp[1] = `Ship created! (id=${ship.id})`;
-                            return arrResp;
+                        if (ship !== undefined) {
+                            return { status: 201, msj: 'Ship created!' };
                         }
-                        arrResp[0] = 500;
-                        arrResp[1] = 'Error when creating ship.';
-                        return arrResp;
+                        return { status: 500, msj: 'Error when creating ship' };
                     }
-                    arrResp[0] = 400;
-                    arrResp[1] = 'Error, coordinates invalid';
-                    return arrResp;
+                    return { status: 200, msj: 'Error, coordinates invalid' };
                 }
-                arrResp[0] = 400;
-                arrResp[1] = 'Error propierty ship.';
-                return arrResp;
+                return { status: 200, msj: 'Error propierty ship' };
             }
-            arrResp[0] = 400;
-            arrResp[1] = 'Error loading board.';
-            return arrResp;
+            return { status: 200, msj: 'Error loading board' };
         }
-        arrResp[0] = 400;
-        arrResp[1] = 'Indicate game.';
-        return arrResp;
+        return { status: 200, msj: 'Indicate game' };
     },
 
 };

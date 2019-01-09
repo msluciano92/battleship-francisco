@@ -59,7 +59,7 @@ module.exports = {
                 partida_id: gameId,
                 tipo: typE1,
             });
-            if (board.id !== undefined) {
+            if (board !== undefined) {
                 const coordinate = await Coordenada.findOne({
                     where: {
                         and: [
@@ -85,9 +85,9 @@ module.exports = {
                             let msj;
                             let value;
                             const ok = await sails.helpers.coodinates.moveTouchShip.with({
-                                xX,
-                                yY,
                                 barcos: ships,
+                                x: xX,
+                                y: yY,
                             });
                             if (ok) { // verifico en los barcos si la coordenada toca a alguno de ellos
                                 value = 3;
@@ -96,29 +96,29 @@ module.exports = {
                                 value = 4;
                                 msj = '¡Water!';
                             }
-                            await Coordenada.create({
-                                tablero_id: board.id,
-                                xX,
-                                yY,
-                                value,
-                            }).fetch();
                             await sails.helpers.coodinates.checkShipState.with({
                                 tableroId: board.id,
                                 barcoTableroId: board2.id,
                             });
-                            return msj;
+                            const params = {
+                                tablero_id: board.id,
+                                x: xX,
+                                y: yY,
+                                value,
+                            };
+                            await Coordenada.create(params).fetch();
+                            return { status: 201, msj };
                         }
-                        return 'Board not have ships';
+                        return { status: 400, msj: 'Board not have ships' };
                     }
-                    return 'Error. Loading data ships.';
+                    return { status: 400, msj: 'Error. Loading data ships.' };
                 } if (!isCorrect(x, y)) {
-                    return 'Coordinate incorrect. [0 <= x >= 9] && [A <= y >= J] ';
+                    return { status: 400, msj: 'Coordinate incorrect. [0 <= x >= 9] && [A <= y >= J] ' };
                 }
-                return 'Coordinate selected!';
+                return { status: 400, msj: 'Coordinate selected!' };
             }
-            return 'Error Loading board attack';
+            return { status: 400, msj: 'Error Loading board attack' };
         }
-        return 'Error. Loading game data.';
+        return { status: 400, msj: 'Error. Loading game data.' };
     },
-
 };

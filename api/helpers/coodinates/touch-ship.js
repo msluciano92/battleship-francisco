@@ -57,6 +57,7 @@ module.exports = {
             } else {
                 posY += 1;
             } i += 1;
-        } return ok;
+        }
+        return ok;
     },
 };

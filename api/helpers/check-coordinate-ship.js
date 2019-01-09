@@ -58,18 +58,18 @@ module.exports = {
 
     async fn(inputs) {
         const shipsS = inputs.ships;
+        const orientationN = inputs.orientation;
+        const addresS = inputs.address;
         let k = 0;
         let ok = false;
         const arrX = await sails.helpers.arrayX();
         const arrY = await sails.helpers.arrayY();
         let posX = arrX.indexOf(inputs.x);
         let posY = arrY.indexOf(inputs.y);
-        const orientationN = inputs.orientation;
-        const addresS = inputs.address;
         while (!ok && k < shipsS.length) {
             let q = 0;
             while (!ok && q < shipsS.length) {
-                const ship = ships[q];
+                const ship = shipsS[q];
                 valX = arrX[posX];
                 valY = arrY[posY];
                 const inputsParam = {
@@ -77,7 +77,7 @@ module.exports = {
                     x: valX,
                     y: valY,
                 };
-                ok = sails.helpers.coodinates.touchShip.with(inputsParam);
+                ok = await sails.helpers.coodinates.touchShip.with(inputsParam);
                 q += 1;
             }
             if (orientationN === 'V') { // VERTICAL

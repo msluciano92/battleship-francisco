@@ -85,7 +85,7 @@ module.exports = {
             coordinates.forEach((coordinate) => {
                 arrayCoordinates.push([coordinate.x, coordinate.y]);
             });
-            if (ships !== undefined && arrayCoordinates.length > 0) {
+            if (ships !== undefined && ships.length > 1 && arrayCoordinates.length > 0) {
                 ships.forEach(async (ship) => {
                     const arrayCoorShip = shipCoordinates(ship);
                     if (coordinatesIncludesShip(arrayCoordinates, arrayCoorShip)) {
