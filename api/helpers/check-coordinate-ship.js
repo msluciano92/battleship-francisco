@@ -4,7 +4,7 @@ module.exports = {
     friendlyName: 'Check coordinate ship',
 
 
-    description: '',
+    description: 'Check coordinates a new ship',
 
 
     inputs: {
@@ -66,6 +66,7 @@ module.exports = {
         const arrY = await sails.helpers.arrayY();
         let posX = arrX.indexOf(inputs.x);
         let posY = arrY.indexOf(inputs.y);
+
         while (!ok && k < shipsS.length) {
             let q = 0;
             while (!ok && q < shipsS.length) {

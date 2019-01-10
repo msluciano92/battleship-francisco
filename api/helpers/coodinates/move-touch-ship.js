@@ -38,15 +38,15 @@ module.exports = {
         let q = 0;
         while (ok === false && q < ships.length) {
             const ship = ships[q];
-            if (x === ship.inicial_x && y === ship.inicial_y) {
+            if (xX === ship.inicial_x && yY === ship.inicial_y) {
                 ok = true;
             } else if (xX === ship.inicial_x || yY === ship.inicial_y) {
                 const input = {
                     barco: ship,
-                    xX,
-                    yY,
+                    x: xX,
+                    y: yY,
                 };
-                ok = sails.helpers.coodinates.touchShip.with(input);
+                ok = await sails.helpers.coodinates.touchShip.with(input);
             } q += 1;
         } return ok;
     },

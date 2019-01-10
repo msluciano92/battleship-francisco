@@ -65,8 +65,8 @@ module.exports = {
                         and: [
                             {
                                 tablero_id: board.id,
-                                xX,
-                                yY,
+                                x: xX,
+                                y: yY,
                             },
                         ],
                     },
@@ -96,10 +96,7 @@ module.exports = {
                                 value = 4;
                                 msj = '¡Water!';
                             }
-                            await sails.helpers.coodinates.checkShipState.with({
-                                tableroId: board.id,
-                                barcoTableroId: board2.id,
-                            });
+
                             const params = {
                                 tablero_id: board.id,
                                 x: xX,
@@ -107,12 +104,16 @@ module.exports = {
                                 value,
                             };
                             await Coordenada.create(params).fetch();
+                            await sails.helpers.coodinates.checkShipState.with({
+                                tableroId: board.id,
+                                barcoTableroId: board2.id,
+                            });
                             return { status: 201, msj };
                         }
                         return { status: 400, msj: 'Board not have ships' };
                     }
                     return { status: 400, msj: 'Error. Loading data ships.' };
-                } if (!isCorrect(x, y)) {
+                } if (!isCorrect(xX, yY)) {
                     return { status: 400, msj: 'Coordinate incorrect. [0 <= x >= 9] && [A <= y >= J] ' };
                 }
                 return { status: 400, msj: 'Coordinate selected!' };

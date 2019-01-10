@@ -40,7 +40,7 @@ module.exports = {
         let i = 0;
         let shipPosX;
         let shipPosY;
-        while (i < ship.longitud && ok === false) {
+        while (i < ship.longitud && !ok) {
             shipPosX = arrX[posX];
             shipPosY = arrY[posY];
             if (shipPosX === xX && shipPosY === yY) {

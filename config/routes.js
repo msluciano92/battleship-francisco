@@ -25,7 +25,6 @@ module.exports.routes = {
   'GET /state-game-cpu/:id': 'GameController.getCpuState',
   // routes coodenadas
   'PATCH /send-plays-player': 'CoordinateController.setCoordinatesPlayer',
-  'PATCH /send-plays-cpu': 'CoordinateController.setCoordinatesCpu',
   //routes barco
   'POST /create-ship-player' : 'ShipController.createShipPlayer',
   'POST /create-ship-cpu' : 'ShipController.createShipCpu',
