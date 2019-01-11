@@ -43,6 +43,8 @@ module.exports = {
         while (i < ship.longitud && !ok) {
             shipPosX = arrX[posX];
             shipPosY = arrY[posY];
+            /*console.log("busca: " + xX + " - " + yY);
+            console.log("busca: " + shipPosX + " - " + shipPosY);*/
             if (shipPosX === xX && shipPosY === yY) {
                 ok = true;
             }

@@ -79,6 +79,7 @@ module.exports = {
                     const inputsParam = {
                         ships, x: xX, y: yY, longitud, orientation: orientatioN, address: addresS,
                     };
+                    
                     if (await sails.helpers.checkCoordinateShip.with(inputsParam) === false) {
                         const ship = await Barco.create({
                             nombre: namE,

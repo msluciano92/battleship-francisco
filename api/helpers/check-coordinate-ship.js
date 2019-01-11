@@ -66,13 +66,13 @@ module.exports = {
         const arrY = await sails.helpers.arrayY();
         let posX = arrX.indexOf(inputs.x);
         let posY = arrY.indexOf(inputs.y);
-
-        while (!ok && k < shipsS.length) {
+        let longituD = inputs.longitud;
+        while (!ok && k < longituD ) {
             let q = 0;
+            valX = arrX[posX];
+            valY = arrY[posY];
             while (!ok && q < shipsS.length) {
                 const ship = shipsS[q];
-                valX = arrX[posX];
-                valY = arrY[posY];
                 const inputsParam = {
                     barco: ship,
                     x: valX,
@@ -96,5 +96,4 @@ module.exports = {
         }
         return ok;
     },
-
 };

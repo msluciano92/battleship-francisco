@@ -1,4 +1,12 @@
+var sails = require('sails');
 describe('POST /create-game ', () => {
+
+      afterEach(async (done) => {
+          let resultPartida = await sails.models.partida.destroy({}).fetch();
+          let resultTablero = await sails.models.tablero.destroy({}).fetch();
+          done();
+      });
+
     it('Return a new game', (done) => {
         const name = { nombre: 'Game 5' };
         app
@@ -26,33 +34,35 @@ describe('POST /create-game ', () => {
             });
     });
 
-    it('Return error. Param name repeat', (done) => {
-        const name = { nombre: 'Game 5' };
-        app
-            .post('/create-game')
-            .send(name)
-            .expect('Content-type', 'application/json; charset=utf-8')
-            .expect(500)
-            .end(async (err) => {
-                if (err) throw err;
-                done();
-            });
-    });
 });
 
 describe('GET /state-game-player', () => {
+
     beforeEach((done) => {
-        app
-            .post('/partida')
-            .send({ nombre: 'Game X ' })
-            .end((err) => {
-                if (err) throw err;
-                done();
-            });
+            app
+                .post('/create-game')
+                .send({ id: 1, nombre: 'Game X ' })
+                .end((err, res) => {
+                    if (err) throw err;
+                    app
+                        .post('/partida')
+                        .send({id: 2, nombre: "Game test cpu 2"})
+                        .end((err, res) => {
+                            if (err) throw err;
+                            done();
+                        });
+                });
     });
 
+      afterEach(async(done) => {
+        let resultPartida = await sails.models.partida.destroy({}).fetch();
+        let resultTablero = await sails.models.tablero.destroy({}).fetch();
+        done();
+      });
 
-    it('Return OK', (done) => {
+    it('Return OK',async (done) => {
+
+        let res = await sails.models.tablero.find({});
         app
             .get('/state-game-player/1')
             .expect('Content-type', 'application/json; charset=utf-8')
@@ -85,7 +95,7 @@ describe('GET /state-game-player', () => {
 
     it('Return game not includes boards. ', (done) => {
         app
-            .get('/state-game-player/3')
+            .get('/state-game-player/2')
             .expect(200)
             .expect('Content-type', 'application/json; charset=utf-8')
             .end((err, res) => {
@@ -107,16 +117,28 @@ describe('GET /state-game-player', () => {
 });
 
 describe('GET /state-game-cpu ', () => {
-    beforeEach((done) => {
-        app
-            .post('/partida')
-            .send({ nombre: 'Game X ' })
-            .end((err) => {
-                if (err) throw err;
-                done();
-            });
-    });
 
+      beforeEach(async (done) => {
+          app
+            .post('/create-game')
+            .send({ id: 1, nombre: 'Game Test Cpu ' })
+            .end((err, res) => {
+              if (err) throw err;
+                app
+                  .post('/partida')
+                  .send({id: 2, nombre: "Game Test Cpu 2"})
+                  .end((err, res) => {
+                    if (err) throw err;
+                      done();
+                  });
+            });
+      });
+
+      afterEach(async(done) => {
+        let resultPartida = await sails.models.partida.destroy({}).fetch();
+        let resultTablero = await sails.models.tablero.destroy({}).fetch();
+        done();
+      });
 
     it('Return OK', (done) => {
         app
@@ -151,7 +173,7 @@ describe('GET /state-game-cpu ', () => {
 
     it('Return game not includes boards. ', (done) => {
         app
-            .get('/state-game-cpu/3')
+            .get('/state-game-cpu/2')
             .expect(200)
             .expect('Content-type', 'application/json; charset=utf-8')
             .end((err, res) => {
