@@ -32,5 +32,9 @@ module.exports = {
             type: 'string',
             defaultsTo: 'Flota',
         },
+        qTouch: {
+          type: 'number',
+          defaultsTo: 0,          
+        }
     },
 };

@@ -33,13 +33,13 @@ describe('POST /create-ship-player ', () => {
             });
     });
 
-    afterEach(async(done) => {
-      let resultPartida = await sails.models.partida.destroy({}).fetch();
-      let resultTablero = await sails.models.tablero.destroy({}).fetch();
-      done();
+    afterEach(async (done) => {
+        const resultPartida = await sails.models.partida.destroy({}).fetch();
+        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        done();
     });
 
-    it('Return a new ship',async (done) => {
+    it('Return a new ship', async (done) => {
         const params = {
             nombre: 'Ship 1 player ',
             partida_id: 1,
@@ -211,7 +211,7 @@ describe('POST /create-ship-player ', () => {
             });
     });
 
-    it('Return error, coordinates stepped on',async (done) => {
+    it('Return error, coordinates stepped on', async (done) => {
         const params = {
             nombre: 'Ship 1 player ',
             partida_id: 1,
@@ -298,20 +298,20 @@ describe('POST /create-ship-player ', () => {
             direccion: 'R',
         };
 
-                app
-                  .post('/create-ship-player')
-                  .send(params)
-                  .expect('Content-type', 'application/json; charset=utf-8')
-                  .expect(200)
-                  .end((err, res) => {
-                      if (err) {
-                        throw err;
-                      }
-                      expect(res.body.status).toBe(200);
-                      expect(res.body.msj).toBe('Error, coordinates invalid');
-                      done();
-                    });
+        app
+            .post('/create-ship-player')
+            .send(params)
+            .expect('Content-type', 'application/json; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw err;
+                }
+                expect(res.body.status).toBe(200);
+                expect(res.body.msj).toBe('Error, coordinates invalid');
+                done();
             });
+    });
 
     it('Return new ship', (done) => {
         const params = {
@@ -366,46 +366,45 @@ describe('POST /create-ship-player ', () => {
 
 
 describe('POST /create-ship-cpu ', () => {
-  beforeEach((done) => {
-      app
-          .post('/partida')
-          .send({ id: 1, nombre: 'Game X test ship cpu' })
-          .end(async (err) => {
-              if (err) throw err;
-              app
-                  .post('/tablero')
-                  .send({ id: 1, partida_id: 1, tipo: 'JD' })
-                  .end(async (err) => {
-                      if (err) throw err;
-                      app
-                          .post('/tablero')
-                          .send({ id: 2, partida_id: 1, tipo: 'JA' })
-                          .end(async (err) => {
-                              if (err) throw err;
-                              app
-                                  .post('/tablero')
-                                  .send({ id: 3, partida_id: 1, tipo: 'CD' })
-                                  .end(async (err) => {
-                                      if (err) throw err;
-                                      app
-                                          .post('/tablero')
-                                          .send({ id: 4, partida_id: 1, tipo: 'CA' })
-                                          .end(async (err) => {
-                                              if (err) throw err;
-                                              done();
-                                          });
-                                  });
-                          });
-                  });
-          });
-  });
+    beforeEach((done) => {
+        app
+            .post('/partida')
+            .send({ id: 1, nombre: 'Game X test ship cpu' })
+            .end(async (err) => {
+                if (err) throw err;
+                app
+                    .post('/tablero')
+                    .send({ id: 1, partida_id: 1, tipo: 'JD' })
+                    .end(async (err) => {
+                        if (err) throw err;
+                        app
+                            .post('/tablero')
+                            .send({ id: 2, partida_id: 1, tipo: 'JA' })
+                            .end(async (err) => {
+                                if (err) throw err;
+                                app
+                                    .post('/tablero')
+                                    .send({ id: 3, partida_id: 1, tipo: 'CD' })
+                                    .end(async (err) => {
+                                        if (err) throw err;
+                                        app
+                                            .post('/tablero')
+                                            .send({ id: 4, partida_id: 1, tipo: 'CA' })
+                                            .end(async (err) => {
+                                                if (err) throw err;
+                                                done();
+                                            });
+                                    });
+                            });
+                    });
+            });
+    });
 
-  afterEach(async(done) => {
-    let resultPartida = await sails.models.partida.destroy({}).fetch();
-    let resultTablero = await sails.models.tablero.destroy({}).fetch();
-    done();
-  });
-
+    afterEach(async (done) => {
+        const resultPartida = await sails.models.partida.destroy({}).fetch();
+        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        done();
+    });
 
 
     it('Return a new ship', (done) => {

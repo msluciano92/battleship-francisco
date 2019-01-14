@@ -37,11 +37,11 @@ function coordinatesIncludesShip(arrCoordenadas, arrBarco) {
           && arrCoordenadas[j][1] === coordenadaBarco[1]);
             j += 1;
         }
-
         if (!ok1) {
             ok = false;
         } i += 1;
-    } return ok;
+    }
+    return ok;
 }
 
 module.exports = {
@@ -81,23 +81,51 @@ module.exports = {
             tablero_id: boardId,
             value: 3,
         });
-        if (coordinates !== undefined) {
+        if (coordinates !== undefined && coordinates.length > 0) {
             coordinates.forEach((coordinate) => {
                 arrayCoordinates.push([coordinate.x, coordinate.y]);
             });
             if (ships !== undefined && ships.length > 0 && arrayCoordinates.length > 0) {
+              let ok = false;
+              let ind = 0;
+                while(!ok && ind < ships.length) {
+                    
+                    ind += 1;
+                }
+
+
+                // let shipSearch = false;
                 ships.forEach(async (ship) => {
+                    //  if (!shipSearch) {
+                    console.log('entra al foreach');
                     const arrayCoorShip = shipCoordinates(ship);
                     if (coordinatesIncludesShip(arrayCoordinates, arrayCoorShip)) {
-                        await Barco.update({
-                            id: ship.id,
+                        shipSearch = ship;
+                        console.log('lo modifica aca');
+                        const upd = await Barco.update({
+                            id: shipSearch.id,
                         }).set({
                             estado: 'Undido',
                         }).fetch();
+                        console.log(upd);
+                        return Promise.resolve(true);
                     }
+                    // }
                 });
+                return false;
+                /*
+                if (!shipSearch) {
+                    return shipSearch;
+                }
+                const upd = await Barco.update({
+                    id: shipSearch.id,
+                }).set({
+                    estado: 'Undido',
+                }).fetch();
+                return upd !== undefined && upd.length > 0; */
             }
+            return false;
         }
+        return false;
     },
-
 };

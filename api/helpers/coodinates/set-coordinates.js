@@ -84,14 +84,15 @@ module.exports = {
                         if (ships !== undefined) {
                             let msj;
                             let value;
-                            const ok = await sails.helpers.coodinates.moveTouchShip.with({
+                            const resp = await sails.helpers.coodinates.moveTouchShip.with({
                                 barcos: ships,
                                 x: xX,
                                 y: yY,
                             });
-                            if (ok) { // verifico en los barcos si la coordenada toca a alguno de ellos
+                            if (resp.ok) {
                                 value = 3;
                                 msj = '¡Touch a ship!';
+
                             } else {
                                 value = 4;
                                 msj = '¡Water!';
@@ -103,11 +104,13 @@ module.exports = {
                                 y: yY,
                                 value,
                             };
+
                             await Coordenada.create(params).fetch();
-                            await sails.helpers.coodinates.checkShipState.with({
-                                tableroId: board.id,
-                                barcoTableroId: board2.id,
-                            });
+                            if (res.ship.qTouch == res.ship.length) {
+                                msj += ' ¡Ship out!';
+                                await Barco.updateOne({id: resp.ship.id}).set({estado: 'Undido'});
+                                await sails.helpers.game.checkGameState.with({ game_id: gameId });
+                            }
                             return { status: 201, msj };
                         }
                         return { status: 400, msj: 'Board not have ships' };

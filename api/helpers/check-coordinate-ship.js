@@ -66,8 +66,8 @@ module.exports = {
         const arrY = await sails.helpers.arrayY();
         let posX = arrX.indexOf(inputs.x);
         let posY = arrY.indexOf(inputs.y);
-        let longituD = inputs.longitud;
-        while (!ok && k < longituD ) {
+        const longituD = inputs.longitud;
+        while (!ok && k < longituD) {
             let q = 0;
             valX = arrX[posX];
             valY = arrY[posY];
