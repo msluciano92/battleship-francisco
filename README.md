@@ -77,7 +77,7 @@ Steps to try
 			}
 		 )
 
-3) Plays player.
+3) Plays player (Cpu is automatically plays after player).
 
 	PATCH http://localhost:1337/send-plays-player
 
