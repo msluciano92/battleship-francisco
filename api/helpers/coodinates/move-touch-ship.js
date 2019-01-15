@@ -36,9 +36,7 @@ module.exports = {
         const yY = inputs.y;
         let ok = false;
         let q = 0;
-        let shipId = 0;
         let ship;
-        console.log(ships);
         while (ok === false && q < ships.length) {
             ship = ships[q];
             if (xX === ship.inicial_x && yY === ship.inicial_y) {
@@ -50,18 +48,14 @@ module.exports = {
                     y: yY,
                 };
                 ok = await sails.helpers.coodinates.touchShip.with(input);
-                console.log(ok);
-                if (ok) {
-                  console.log("ok: " + ok);
-                }
             } q += 1;
         }
         if (ok) {
-            const qTouch = ship.qTouch += 1;
-            let ship2 = await Barco.updateOne({id: ship.id}).set({qTouch: qTouch });
-            return {ok, ship: ship2};
+            const qTouch = ship.qTouch + 1;
+            const ship2 = await Barco.updateOne({ id: ship.id }).set({ qTouch });
+            return { ok, ship: ship2 };
         }
-        return { ok, ship: ''};
+        return { ok };
     },
 
 };

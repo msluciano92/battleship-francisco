@@ -1,29 +1,30 @@
+
 describe('POST /create-ship-player ', () => {
     beforeEach((done) => {
         app
             .post('/partida')
             .send({ id: 1, nombre: 'Game X test ship player' })
-            .end(async (err) => {
+            .end((err) => {
                 if (err) throw err;
                 app
                     .post('/tablero')
                     .send({ id: 1, partida_id: 1, tipo: 'JD' })
-                    .end(async (err) => {
+                    .end((err) => {
                         if (err) throw err;
                         app
                             .post('/tablero')
                             .send({ id: 2, partida_id: 1, tipo: 'JA' })
-                            .end(async (err) => {
+                            .end((err) => {
                                 if (err) throw err;
                                 app
                                     .post('/tablero')
                                     .send({ id: 3, partida_id: 1, tipo: 'CD' })
-                                    .end(async (err) => {
+                                    .end((err) => {
                                         if (err) throw err;
                                         app
                                             .post('/tablero')
                                             .send({ id: 4, partida_id: 1, tipo: 'CA' })
-                                            .end(async (err) => {
+                                            .end((err) => {
                                                 if (err) throw err;
                                                 done();
                                             });
@@ -34,8 +35,8 @@ describe('POST /create-ship-player ', () => {
     });
 
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
         done();
     });
 
@@ -362,6 +363,31 @@ describe('POST /create-ship-player ', () => {
                 done();
             });
     });
+
+    it('Return ship finalized', async (done) => {
+        const params = {
+            nombre: 'Ship 1 player ',
+            partida_id: 1,
+            inicial_x: '1',
+            inicial_y: 'A',
+            longitud: 5,
+            orientacion: 'H',
+            direccion: 'R',
+        };
+        app
+            .post('/create-ship-player')
+            .send(params)
+            .expect('Content-type', 'application/json; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw err;
+                }
+                expect(res.body.status).toBe(200);
+                expect(res.body.msj).toBe('Ships on board created. ');
+                done();
+            });
+    });
 });
 
 
@@ -401,8 +427,8 @@ describe('POST /create-ship-cpu ', () => {
     });
 
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
         done();
     });
 
@@ -455,6 +481,7 @@ describe('POST /create-ship-cpu ', () => {
                 done();
             });
     });
+
 
     it('Return error propierty ship (parameter inicial_x)', (done) => {
         const params = {
@@ -580,30 +607,47 @@ describe('POST /create-ship-cpu ', () => {
     });
 
     it('Return error, coordinates stepped on', async (done) => {
-        const params = {
+        const params2 = {
             nombre: 'Ship 1 cpu ',
             partida_id: 1,
             inicial_x: '1',
-            inicial_y: 'D',
+            inicial_y: 'B',
             longitud: 5,
             orientacion: 'V',
             direccion: 'B',
         };
-
+        const params1 = {
+            nombre: 'Ship 1 cpu ',
+            partida_id: 1,
+            inicial_x: '3',
+            inicial_y: 'A',
+            longitud: 5,
+            orientacion: 'H',
+            direccion: 'R',
+        };
         app
             .post('/create-ship-cpu')
-            .send(params)
-            .expect('Content-type', 'application/json; charset=utf-8')
-            .expect(200)
-            .end((err, res) => {
+            .send(params1)
+            .end((err) => {
                 if (err) {
                     throw err;
                 }
-                expect(res.body.status).toBe(200);
-                expect(res.body.msj).toBe('Error, coordinates invalid');
-                done();
+                app
+                    .post('/create-ship-cpu')
+                    .send(params2)
+                    .expect('Content-type', 'application/json; charset=utf-8')
+                    .expect(200)
+                    .end((err, res) => {
+                        if (err) {
+                            throw err;
+                        }
+                        expect(res.body.status).toBe(200);
+                        expect(res.body.msj).toBe('Error, coordinates invalid');
+                        done();
+                    });
             });
     });
+
 
     it('Return new ship', (done) => {
         const params = {
@@ -626,31 +670,6 @@ describe('POST /create-ship-cpu ', () => {
                 }
                 expect(res.body.status).toBe(201);
                 expect(res.body.msj).toBe('Ship created!');
-                done();
-            });
-    });
-
-    it('Return error, coordinates stepped on', (done) => {
-        const params = {
-            nombre: 'Ship 3 cpu ',
-            partida_id: 1,
-            inicial_x: '5',
-            inicial_y: 'E',
-            longitud: 3,
-            orientacion: 'V',
-            direccion: 'T',
-        };
-        app
-            .post('/create-ship-cpu')
-            .send(params)
-            .expect('Content-type', 'application/json; charset=utf-8')
-            .expect(200)
-            .end((err, res) => {
-                if (err) {
-                    throw err;
-                }
-                expect(res.body.status).toBe(200);
-                expect(res.body.msj).toBe('Error, coordinates invalid');
                 done();
             });
     });
@@ -680,12 +699,13 @@ describe('POST /create-ship-cpu ', () => {
             });
     });
 
+
     it('Return new ship', (done) => {
         const params = {
-            nombre: 'Ship 5 cpu ',
+            nombre: 'Ship 4 cpu ',
             partida_id: 1,
-            inicial_x: '7',
-            inicial_y: 'F',
+            inicial_x: '9',
+            inicial_y: 'J',
             longitud: 1,
             orientacion: 'H',
             direccion: 'R',
@@ -705,13 +725,14 @@ describe('POST /create-ship-cpu ', () => {
             });
     });
 
-    it('Return new ship', (done) => {
+
+    it('Return new ship and Configuration finalized.', (done) => {
         const params = {
             nombre: 'Ship 5 cpu ',
             partida_id: 1,
-            inicial_x: '1',
-            inicial_y: 'A',
-            longitud: 3,
+            inicial_x: '7',
+            inicial_y: 'F',
+            longitud: 1,
             orientacion: 'H',
             direccion: 'R',
         };
@@ -725,7 +746,32 @@ describe('POST /create-ship-cpu ', () => {
                     throw err;
                 }
                 expect(res.body.status).toBe(201);
-                expect(res.body.msj).toBe('Ship created!');
+                expect(res.body.msj).toBe('Ship created! Configuration finalized. Send play');
+                done();
+            });
+    });
+
+    it('Return ship finalized', async (done) => {
+        const params = {
+            nombre: 'Ship 1 player ',
+            partida_id: 1,
+            inicial_x: '1',
+            inicial_y: 'A',
+            longitud: 5,
+            orientacion: 'H',
+            direccion: 'R',
+        };
+        app
+            .post('/create-ship-cpu')
+            .send(params)
+            .expect('Content-type', 'application/json; charset=utf-8')
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    throw err;
+                }
+                expect(res.body.status).toBe(200);
+                expect(res.body.msj).toBe('Ships on board created. ');
                 done();
             });
     });

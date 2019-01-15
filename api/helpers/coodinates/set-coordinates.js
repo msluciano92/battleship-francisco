@@ -92,7 +92,11 @@ module.exports = {
                             if (resp.ok) {
                                 value = 3;
                                 msj = '¡Touch a ship!';
-
+                                if (resp.ship.qTouch === resp.ship.longitud) {
+                                    msj += ' ¡Ship out!';
+                                    await Barco.updateOne({ id: resp.ship.id }).set({ estado: 'Undido' });
+                                    await sails.helpers.game.checkGameState.with({ game_id: gameId });
+                                }
                             } else {
                                 value = 4;
                                 msj = '¡Water!';
@@ -106,11 +110,6 @@ module.exports = {
                             };
 
                             await Coordenada.create(params).fetch();
-                            if (res.ship.qTouch == res.ship.length) {
-                                msj += ' ¡Ship out!';
-                                await Barco.updateOne({id: resp.ship.id}).set({estado: 'Undido'});
-                                await sails.helpers.game.checkGameState.with({ game_id: gameId });
-                            }
                             return { status: 201, msj };
                         }
                         return { status: 400, msj: 'Board not have ships' };

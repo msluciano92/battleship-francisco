@@ -2,8 +2,8 @@ const sails = require('sails');
 
 describe('POST /create-game ', () => {
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
         done();
     });
 
@@ -40,12 +40,12 @@ describe('GET /state-game-player', () => {
         app
             .post('/create-game')
             .send({ id: 1, nombre: 'Game X ' })
-            .end((err, res) => {
+            .end((err) => {
                 if (err) throw err;
                 app
                     .post('/partida')
                     .send({ id: 2, nombre: 'Game test cpu 2' })
-                    .end((err, res) => {
+                    .end((err) => {
                         if (err) throw err;
                         done();
                     });
@@ -53,13 +53,12 @@ describe('GET /state-game-player', () => {
     });
 
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
         done();
     });
 
     it('Return OK', async (done) => {
-        const res = await sails.models.tablero.find({});
         app
             .get('/state-game-player/1')
             .expect('Content-type', 'application/json; charset=utf-8')
@@ -118,12 +117,12 @@ describe('GET /state-game-cpu ', () => {
         app
             .post('/create-game')
             .send({ id: 1, nombre: 'Game Test Cpu ' })
-            .end((err, res) => {
+            .end((err) => {
                 if (err) throw err;
                 app
                     .post('/partida')
                     .send({ id: 2, nombre: 'Game Test Cpu 2' })
-                    .end((err, res) => {
+                    .end((err) => {
                         if (err) throw err;
                         done();
                     });
@@ -131,8 +130,8 @@ describe('GET /state-game-cpu ', () => {
     });
 
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
         done();
     });
 
@@ -178,6 +177,7 @@ describe('GET /state-game-cpu ', () => {
                 done();
             });
     });
+
 
     it('Return error. Param get empty. ', (done) => {
         app

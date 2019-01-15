@@ -9,7 +9,7 @@ async function checkShipsState(gameId, boardId, winds) {
     // checkeo primero siempre por los barcos de la cpu, por que el jugador es el primero que juega
     if (shipsWithStateOut !== undefined) {
         if (shipsWithStateOut.length === 1) {
-            const respGame = await Partida.updateOne({ id: gameId }).set({ ganador: winds, estado: 'Finalized' });
+            await Partida.updateOne({ id: gameId }).set({ ganador: winds, estado: 'Finalizada' });
             return { state: false, msj: '¡Game Finalized!' };
         }
         return { state: true, msj: 'Ships ok' };

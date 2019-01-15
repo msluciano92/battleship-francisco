@@ -15,9 +15,10 @@ module.exports = {
                 x: req.body.x,
                 y: req.body.y,
             };
+
             const result = await sails.helpers.coodinates.setCoordinates.with(inputs);
             if (result.msj !== 'Coordinate selected!') {
-                 const coor = await sails.helpers.setCoordinateRandom.with({
+                const coor = await sails.helpers.setCoordinateRandom.with({
                     partida_id: req.body.partida_id,
                     tipo: 'CA',
                 });

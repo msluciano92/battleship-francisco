@@ -28,19 +28,58 @@ describe('PATCH /send-plays-player ', () => {
                                                 app
                                                     .post('/barco')
                                                     .send({
-                                                        nombre: 'Ship 1 cpu', tablero_id: 3, inicial_x: '1', inicial_y: 'A', longitud: 2, orientacion: 'H', direccion: 'R',
+                                                        nombre: 'Ship 1 cpu',
+                                                        tablero_id: 3,
+                                                        inicial_x: '1',
+                                                        inicial_y: 'A',
+                                                        longitud: 2,
+                                                        orientacion: 'H',
+                                                        direccion: 'R',
                                                     })
-                                                    .end(async (err, res) => {
+                                                    .end(async (err) => {
                                                         if (err) throw err;
-                                                        console.log(res.body);
                                                         app
                                                             .post('/barco')
                                                             .send({
-                                                                nombre: 'Ship 1 player', tablero_id: 1, inicial_x: '1', inicial_y: 'B', longitud: 2, orientacion: 'H', direccion: 'L',
+                                                                nombre: 'Ship 1 player',
+                                                                tablero_id: 1,
+                                                                inicial_x: '1',
+                                                                inicial_y: 'B',
+                                                                longitud: 2,
+                                                                orientacion: 'H',
+                                                                direccion: 'L',
                                                             })
-                                                            .end(async (err, res) => {
+                                                            .end(async (err) => {
                                                                 if (err) throw err;
-                                                                done();
+                                                                app
+                                                                    .post('/barco')
+                                                                    .send({
+                                                                        nombre: 'Ship 2 player',
+                                                                        tablero_id: 1,
+                                                                        inicial_x: '3',
+                                                                        inicial_y: 'F',
+                                                                        longitud: 3,
+                                                                        orientacion: 'H',
+                                                                        direccion: 'R',
+                                                                    })
+                                                                    .end(async (err) => {
+                                                                        if (err) throw err;
+                                                                        app
+                                                                            .post('/barco')
+                                                                            .send({
+                                                                                nombre: 'Ship 2 cpu',
+                                                                                tablero_id: 3,
+                                                                                inicial_x: '3',
+                                                                                inicial_y: 'G',
+                                                                                longitud: 3,
+                                                                                orientacion: 'V',
+                                                                                direccion: 'B',
+                                                                            })
+                                                                            .end(async (err) => {
+                                                                                if (err) throw err;
+                                                                                done();
+                                                                            });
+                                                                    });
                                                             });
                                                     });
                                             });
@@ -51,13 +90,13 @@ describe('PATCH /send-plays-player ', () => {
     });
 
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
-        const resultBarco = await sails.models.barco.destroy({}).fetch();
-        const resultCoordinate = await sails.models.coordenada.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
+        await sails.models.barco.destroy({}).fetch();
+        await sails.models.coordenada.destroy({}).fetch();
         done();
     });
-    /*
+
 
     it('Return plays player - Water', async (done) => {
         app
@@ -97,12 +136,12 @@ describe('PATCH /send-plays-player ', () => {
                 done();
             });
     });
-*/
-    it('Return plays player - Touch ship - ship out ', (done) => {
+
+    it('Return plays player - Touch ship - ship out (estado=Undido) ', (done) => {
         app
             .patch('/send-plays-player')
             .send({ partida_id: 1, x: '1', y: 'B' })
-            .end((err, res) => {
+            .end((err) => {
                 if (err) throw err;
                 app
                     .patch('/send-plays-player')
@@ -116,12 +155,12 @@ describe('PATCH /send-plays-player ', () => {
                     });
             });
     });
-/*
+
     it('Return coordinated selected ', (done) => {
         app
-            .send({ partida_id: 1, x: '1', y: 'A' })
             .patch('/send-plays-player')
-            .end((err, res) => {
+            .send({ partida_id: 1, x: '1', y: 'A' })
+            .end((err) => {
                 if (err) throw err;
                 app
                     .patch('/send-plays-player')
@@ -137,7 +176,7 @@ describe('PATCH /send-plays-player ', () => {
     });
 });
 
-describe('Ship out', () => {
+describe('Game finalized', () => {
     beforeEach((done) => {
         app
             .post('/partida')
@@ -167,21 +206,61 @@ describe('Ship out', () => {
                                                 app
                                                     .post('/barco')
                                                     .send({
-                                                        id: 1, nombre: 'Ship 1 cpu', tablero_id: 3, inicial_x: '1', inicial_y: 'A', longitud: 2, orientacion: 'H', direccion: 'R',
+                                                        id: 1,
+                                                        nombre: 'Ship 1 cpu',
+                                                        tablero_id: 3,
+                                                        inicial_x: '1',
+                                                        inicial_y: 'A',
+                                                        longitud: 2,
+                                                        orientacion: 'H',
+                                                        direccion: 'R',
                                                     })
-                                                    .end(async (err, res) => {
+                                                    .end(async (err) => {
                                                         if (err) throw err;
                                                         app
-                                                            .patch('/send-plays-player')
-                                                            .send({ partida_id: 1, x: '1', y: 'A' })
-                                                            .end((err, res) => {
+                                                            .post('/barco')
+                                                            .send({
+                                                                id: 1,
+                                                                nombre: 'Ship 2 cpu',
+                                                                tablero_id: 3,
+                                                                inicial_x: '5',
+                                                                inicial_y: 'G',
+                                                                longitud: 3,
+                                                                orientacion: 'V',
+                                                                direccion: 'B',
+                                                            })
+                                                            .end(async (err) => {
                                                                 if (err) throw err;
                                                                 app
                                                                     .patch('/send-plays-player')
-                                                                    .send({ partida_id: 1, x: '1', y: 'B' })
-                                                                    .end((err, res) => {
+                                                                    .send({ partida_id: 1, x: '1', y: 'A' })
+                                                                    .end((err) => {
                                                                         if (err) throw err;
-                                                                        done();
+                                                                        app
+                                                                            .patch('/send-plays-player')
+                                                                            .send({ partida_id: 1, x: '1', y: 'B' })
+                                                                            .end((err) => {
+                                                                                if (err) throw err;
+                                                                                app
+                                                                                    .patch('/send-plays-player')
+                                                                                    .send({ partida_id: 1, x: '6', y: 'G' })
+                                                                                    .end((err) => {
+                                                                                        if (err) throw err;
+                                                                                        app
+                                                                                            .patch('/send-plays-player')
+                                                                                            .send({ partida_id: 1, x: '7', y: 'G' })
+                                                                                            .end((err) => {
+                                                                                                if (err) throw err;
+                                                                                                app
+                                                                                                    .patch('/send-plays-player')
+                                                                                                    .send({ partida_id: 1, x: '8', y: 'G' })
+                                                                                                    .end((err) => {
+                                                                                                        if (err) throw err;
+                                                                                                        done();
+                                                                                                    });
+                                                                                            });
+                                                                                    });
+                                                                            });
                                                                     });
                                                             });
                                                     });
@@ -193,21 +272,21 @@ describe('Ship out', () => {
     });
 
     afterEach(async (done) => {
-        const resultPartida = await sails.models.partida.destroy({}).fetch();
-        const resultTablero = await sails.models.tablero.destroy({}).fetch();
-        const resultBarco = await sails.models.barco.destroy({}).fetch();
+        await sails.models.partida.destroy({}).fetch();
+        await sails.models.tablero.destroy({}).fetch();
+        await sails.models.barco.destroy({}).fetch();
+        await sails.models.coordenada.destroy({}).fetch();
         done();
     });
 
-    it('Return state ship cpu - (Undido) ', (done) => {
+    it('Return game finalized ', (done) => {
         app
-            .get('/barco/1')
+            .get('/state-game-player/1')
             .expect(200)
             .end((err, res) => {
                 if (err) throw err;
-                expect(res.body.estado).toBe('Undido');
+                expect(res.body.state).toBe('Finalizada');
                 done();
             });
     });
-    */
 });

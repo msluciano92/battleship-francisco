@@ -29,7 +29,7 @@ module.exports = {
             const game = await Partida.findOne({
                 id: gameId,
             });
-            if (game !== undefined && game.estado !== 'Finalizada') {
+            if (game !== undefined) {
                 const board = await Tablero.findOne({
                     partida_id: gameId,
                     tipo: type,
@@ -61,7 +61,7 @@ module.exports = {
                         });
                         x += 1;
                     });
-                    return { status: 200, msj: arrayJson };
+                    return { status: 200, msj: arrayJson, state: game.estado };
                 }
                 return { status: 200, msj: 'Game not includes boards' };
             }
