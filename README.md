@@ -1,6 +1,6 @@
 # battleship-test
 
-2) 
+2)
 	a. Fire a player shot.
 
 		Make a play of the player.
@@ -19,20 +19,9 @@
 
 		GET http://localhost:1337/state-game-cpu/:id
 		retorn state board, reflects the cpu plays (send-play-cpu)
-		
 
-	c. Fire a CPU shot, taking into account the game’s state.
-		PATCH http://localhost:1337/send-plays-cpu
 
-		body => {
-			"partida_id": value number, references a game
-			"x": valor entre 1..10 (string)
-			"y": valor entre A..J (string)
-		}
-
-		
-
-	d. Modification of a ship's name
+	c. Modification of a ship's name
 
 		PATCH http://localhost:1337/barco/:id
 
@@ -40,7 +29,7 @@
 			"nombre": "..." (string)
 		}
 
-	e. Remove a ship
+	d. Remove a ship
 
 		DELETE http://localhost:1337/barco/:id
 
@@ -63,7 +52,8 @@ Steps to try
 
 
 2) Create ship of the player and cpu
-
+	POST -> http://localhost:1337/create-ship-cpu
+		AND
 	POST -> http://localhost:1337/create-ship-player
 		body: {
 			"partida_id": "id the game",
@@ -76,7 +66,7 @@ Steps to try
 		}				
 
 		( EJ =>
-			{	
+			{
 				"nombre": "sarasa",
 				"longitud": 5,
 				"partida_id" : 1,
@@ -85,19 +75,20 @@ Steps to try
 				"orientacion": "H",
 				"direccion": "R"
 			}
-		 ) 
+		 )
 
+3) Plays player.
+
+	PATCH http://localhost:1337/send-plays-player
+
+	body => {
+		"partida_id": value number that references a game
+		"x": value e/ 1..10 (string)
+		"y": value e/ A..J (string)
+	}
 
 
 Once this is done, you can try 2) a.  y  2) b.
-
-* CLARIFICATIONS:
-	Pending:
-		Control the number ship on the board.
-			"     the ship lenth.
-			"     when game finalized.
-			"	  you can start playing once the boards are created.
-
 
 # battleship
 # battleship-francisco
