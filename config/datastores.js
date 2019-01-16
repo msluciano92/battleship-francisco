@@ -32,10 +32,14 @@ module.exports.datastores = {
   *                                                                          *
   ***************************************************************************/
 
-  default: {
-    adapter: require("sails-disk"),
-    inMemoryOnly: true,
-    migrate: 'alter',
+  default: process.env.NODE_ENV === 'test' ?
+      { adapter: require("sails-disk"),
+        inMemoryOnly: true,
+        migrate: 'alter', }
+    : { adapter: require("sails-mysql"),
+        url: 'mysql://francisco:francisco@localhost:3306/francisco_test',
+        connectionLimit: 0, },
+
 
     /***************************************************************************
     *                                                                          *
@@ -54,5 +58,4 @@ module.exports.datastores = {
     // adapter: 'sails-mysql',
     // url: 'mysql://user:password@host:port/database',
 
-  },
 };
